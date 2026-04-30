@@ -1,0 +1,296 @@
+{
+  "brand": {
+    "name": "SkynetLabs Dental Demo",
+    "tagline": "Manhattan cosmetic dentistry, sculpted in porcelain"
+  },
+  "niche": "dental",
+  "niche_label": "Dental",
+  "location": {
+    "city": "Manhattan",
+    "region": "NY",
+    "country": "US"
+  },
+  "owner": {
+    "name": "Waseem Nasir",
+    "agency": "SkynetLabs",
+    "fiverr_url": "https://www.fiverr.com/agencies/skynetjoellc",
+    "hub_url": "https://skynetjoe.com",
+    "contact_email": "waseembali2k26@gmail.com",
+    "contact_phone": "+1-212-555-0102"
+  },
+  "palette": {
+    "bg": "#F5EFE6",
+    "surface": "#EDE3D2",
+    "ink": "#1F1A14",
+    "accent": "#7A2E2A",
+    "detail": "#C8A35B"
+  },
+  "fonts": {
+    "display": "Instrument Serif",
+    "body": "Inter Tight",
+    "mono": null
+  },
+  "dark_mode": false,
+  "hero": {
+    "kind": "r3f",
+    "h1": "A smile, *sculpted* in Manhattan.",
+    "sub": "Patented no-prep porcelain. Same-day delivery. By appointment only on Fifth Avenue.",
+    "photo_url": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1920&auto=format&fit=crop&q=80",
+    "photo_credit": "Photo by Caroline LM on Unsplash",
+    "overlay": "rgba(245,239,230,0.0)",
+    "focal_point": "center"
+  },
+  "hero_3d": {
+    "r3f_scene": "r3f-tooth",
+    "poster_url": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1920&auto=format&fit=crop&q=80",
+    "material": {
+      "kind": "principled-bsdf",
+      "subsurface_scatter_radius_mm": 0.4,
+      "subsurface_color": "#FFE9E0",
+      "enamel_roughness": 0.08,
+      "ior": 1.62
+    },
+    "lighting": {
+      "hdri": "studio_small_09",
+      "key_kelvin": 4200,
+      "fill": "soft-loupe-glow"
+    },
+    "rotation_rpm_y": 0.15,
+    "reduce_motion_fallback": "static-poster"
+  },
+  "copy": {
+    "primary_cta": "Book a private consult →",
+    "primary_cta_href": "#contact",
+    "secondary_cta": "Reserve your smile preview",
+    "secondary_cta_href": "tel:+12125550102",
+    "sticky_mobile_bar": "Reserve your smile preview — (212) 555-0102"
+  },
+  "trust_strip": [
+    "AACD Accredited Member",
+    "5,000+ Smile Makeovers",
+    "20+ Years on Fifth Avenue",
+    "Featured · Vogue · GQ · NYT",
+    "CEREC Same-Day Lab On-Site"
+  ],
+  "service_area": {
+    "primary_city": "Manhattan, NY",
+    "service_area_cities": [
+      "Upper East Side, NY",
+      "Upper West Side, NY",
+      "Tribeca, NY",
+      "SoHo, NY",
+      "West Village, NY",
+      "Chelsea, NY",
+      "Flatiron, NY",
+      "Gramercy, NY",
+      "Midtown East, NY",
+      "Midtown West, NY",
+      "Hell's Kitchen, NY",
+      "Lincoln Square, NY",
+      "Carnegie Hill, NY",
+      "Lenox Hill, NY",
+      "Murray Hill, NY",
+      "Battery Park City, NY",
+      "Financial District, NY",
+      "Greenwich Village, NY",
+      "Nolita, NY",
+      "Lower East Side, NY",
+      "Brooklyn Heights, NY",
+      "DUMBO, NY",
+      "Park Slope, NY",
+      "Williamsburg, NY",
+      "Long Island City, NY",
+      "Astoria, NY",
+      "Forest Hills, NY",
+      "Riverdale, NY",
+      "Greenwich, CT",
+      "Westport, CT"
+    ]
+  },
+  "services": [
+    {
+      "slug": "no-prep-veneers",
+      "title": "No-Prep Porcelain Veneers",
+      "blurb": "Patented prep-less feldspathic veneers bonded to natural enamel without grinding healthy tooth structure. Two appointments — one for digital design and provisional, one for final bonding. The result is reversible, biologically conservative, and indistinguishable from natural dentition under photography."
+    },
+    {
+      "slug": "same-day-smile",
+      "title": "Same-Day Smile Design",
+      "blurb": "Digital Smile Design preview, in-office CEREC milling lab, and ceramist-supervised glazing — full smile transformation completed in a single appointment. We do not outsource laboratory work for this service. The lab is upstairs from the operatory, staffed by a master ceramist who has worked with Dr. Davidowitz for over a decade."
+    },
+    {
+      "slug": "precision-implants",
+      "title": "Precision Dental Implants",
+      "blurb": "Cone-beam CT-guided implant placement using surgical-stent navigation for sub-millimeter accuracy. Single-tooth and full-arch (All-on-4) protocols available. Same-day provisional restorations for visible anterior cases. Straumann and Nobel Biocare systems exclusively — both with lifetime fixture warranties."
+    },
+    {
+      "slug": "invisible-ortho",
+      "title": "Invisible Orthodontics",
+      "blurb": "Invisalign Diamond+ Provider status with 20+ years of clear-aligner case experience. We handle complex bite correction and pre-prosthetic alignment that lower-volume offices refer out. Cases are planned, monitored, and refined in-house — never outsourced to a tele-dentistry vendor."
+    },
+    {
+      "slug": "bio-aesthetic-whitening",
+      "title": "Bio-Aesthetic Whitening",
+      "blurb": "KöR Deep Bleaching combined with custom take-home trays for the deepest, most stable whitening results clinically documented. Sensitivity-managed protocols for patients with prior whitening trauma. Maintenance regimen built around your coffee, wine, and travel reality — not generic instructions."
+    },
+    {
+      "slug": "full-mouth",
+      "title": "Full-Mouth Reconstruction",
+      "blurb": "Comprehensive rehabilitation of worn, broken, or collapsed dentition using a phased treatment plan that respects your schedule and budget. Articulator-mounted occlusal analysis, neuromuscular dentistry principles, and laboratory-supervised provisionalization. We do not start full-mouth cases without a complete written treatment plan and second opinion welcome."
+    }
+  ],
+  "process": [
+    {
+      "n": 1,
+      "title": "Private consultation",
+      "blurb": "90-minute review of medical history, occlusion, and aesthetic goals. Digital photography, CBCT scan, and intraoral scanning included — never a separate fee."
+    },
+    {
+      "n": 2,
+      "title": "Smile preview",
+      "blurb": "Digital Smile Design mockup or wax-up worn in-mouth so you experience the result before committing. Reversible, no preparation required."
+    },
+    {
+      "n": 3,
+      "title": "Treatment + provisional",
+      "blurb": "Same-day or two-visit protocol depending on case complexity. Provisional restorations are diagnostic, not placeholder — refinements made before final bonding."
+    },
+    {
+      "n": 4,
+      "title": "Lifetime maintenance",
+      "blurb": "Six-month hygiene cadence, annual occlusal review, and a lifetime warranty on porcelain bondings under our care."
+    }
+  ],
+  "case_study": {
+    "title": "International Patient — Full Smile Reconstruction Across Two Trips",
+    "photo_url": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1920&auto=format&fit=crop&q=80",
+    "quote": "I flew from London twice for the work and would do it ten times over. Dr. Davidowitz designed the smile in front of me, walked me through every porcelain choice, and the final result is the only set of veneers in my circle that nobody can identify as veneers.",
+    "stats": [
+      {
+        "value": "12 units",
+        "label": "No-prep porcelain veneers"
+      },
+      {
+        "value": "2 trips",
+        "label": "Total treatment span"
+      },
+      {
+        "value": "Lifetime",
+        "label": "Bonding warranty"
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "quote": "I am on stage eight shows a week. The team designed a smile that reads cinematic under house lights and natural in interviews. Six years in and the bondings have never moved.",
+      "name": "Charlotte E.",
+      "role": "Broadway lead actress",
+      "city": "Manhattan, NY"
+    },
+    {
+      "quote": "I had ninety minutes between calls and the team was honest about what they could finish in that window. Came back four months later for the second appointment and the result is invisible to anyone except my wife. That was the assignment.",
+      "name": "Mr. R.",
+      "role": "Hedge-fund principal",
+      "city": "Greenwich, CT"
+    },
+    {
+      "quote": "I had three veneer attempts in London before flying out for a fourth opinion. Dr. Davidowitz spent two hours examining the existing work, redesigned the case from the bite up, and delivered a result two ceramists in Harley Street had told me was not technically possible. Worth every flight.",
+      "name": "Eleanor S.",
+      "role": "Returning international patient",
+      "city": "London, UK"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much do veneers cost in Manhattan?",
+      "a": "Investment for a full smile of 8 to 10 no-prep porcelain veneers ranges from $48,000 to $72,000 depending on case complexity, ceramist selection, and the ancillary work (orthodontics, gum lifting, implant integration) required. We provide a written, line-item treatment plan after the initial consultation — never a verbal range."
+    },
+    {
+      "q": "Will my natural enamel be removed?",
+      "a": "Not in our no-prep protocol. The veneers are bonded directly to existing enamel without grinding. This preserves your natural tooth structure, makes the work biologically reversible if ever needed, and produces a healthier long-term outcome than traditional aggressive-prep veneers."
+    },
+    {
+      "q": "How many visits for a full smile makeover?",
+      "a": "Most cases complete in two appointments: design and provisional placement (3 hours), then final bonding (4 to 6 hours). Complex cases involving orthodontics or implant integration extend across 4 to 6 months but the cosmetic delivery itself remains a two-visit protocol."
+    },
+    {
+      "q": "Do you accept out-of-network PPO reimbursement?",
+      "a": "We are out-of-network with all PPO carriers but provide full pre-authorization documentation and itemized statements for your reimbursement claim. Most patients with good PPO plans recover 30 to 50% of treatment cost. We also accept HSA/FSA payment and offer in-house financing."
+    },
+    {
+      "q": "Can you match a single chipped front tooth?",
+      "a": "Yes. Single-tooth bonding and single-tooth porcelain veneer matches are technically harder than full-smile cases because the result must blend with existing teeth under every lighting condition. We use spectrophotometric color matching and on-site ceramist work for these cases — outsourcing produces compromised results."
+    },
+    {
+      "q": "How long do porcelain veneers last?",
+      "a": "Properly designed and bonded feldspathic porcelain veneers typically perform for 15 to 25 years with normal wear. Pressed-ceramic and zirconia veneers can perform longer. Maintenance — twice-yearly hygiene visits and avoiding ice-chewing — is the variable, not the porcelain."
+    },
+    {
+      "q": "What sedation options are offered?",
+      "a": "Nitrous oxide (laughing gas) at every appointment as standard. Oral conscious sedation (Halcion or Valium) for longer cases. IV sedation by visiting board-certified dental anesthesiologist for full-mouth or anxiety-managed patients. We do not perform any case in which a patient is uncomfortable."
+    },
+    {
+      "q": "Do you photograph results for my approval before bonding?",
+      "a": "Always. Provisional restorations are worn for 1 to 2 weeks, photographed in your environment, and refined before final bonding. We do not bond porcelain you have not seen, lived in, and approved. Most laboratories design veneers from a single appointment — we treat the provisional phase as a diagnostic rehearsal."
+    }
+  ],
+  "lead_magnet": {
+    "title": "The Manhattan Veneer Pre-Consult Checklist",
+    "subtitle": "What to ask any cosmetic dentist before signing a treatment plan. 9 pages.",
+    "cta": "Get the guide →"
+  },
+  "photos": {
+    "hero": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1920&auto=format&fit=crop&q=80",
+    "gallery": [
+      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1581585095852-d54de6ee0d0d?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1606811951341-8e5a7e0f80a9?w=1280&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=1280&auto=format&fit=crop&q=80"
+    ]
+  },
+  "competitors": [
+    "https://luxurydentistrynyc.com",
+    "https://www.lesbellesnyc.com",
+    "https://dentblanchedental.com",
+    "https://www.dentalboutiquenyc.com",
+    "https://www.nyccd.com"
+  ],
+  "anti_patterns": [
+    "Cartoon tooth mascot",
+    "Auto-playing before/after slider",
+    "$99 cleaning promo banner"
+  ],
+  "modules": {
+    "booking_calendar": true,
+    "service_area_map": true,
+    "photo_gallery": true,
+    "faq": true,
+    "lead_magnet": true
+  },
+  "contact": {
+    "form_endpoint": "https://api.web3forms.com/submit",
+    "calendly_url": "https://calendly.com/skynetlabs-demo/15min"
+  },
+  "seo": {
+    "title": "Cosmetic Dentistry Manhattan | No-Prep Porcelain Veneers | SkynetLabs",
+    "description": "Manhattan cosmetic dentistry sculpted in porcelain. AACD Accredited, 5,000+ smile makeovers, CEREC same-day lab. By appointment, Fifth Avenue.",
+    "keywords": [
+      "cosmetic dentist manhattan",
+      "porcelain veneers nyc",
+      "no-prep veneers",
+      "smile design manhattan",
+      "cerec dentist nyc"
+    ],
+    "noindex": true
+  },
+  "demo_disclosure": {
+    "enabled": true,
+    "fiverr_cta_url": "https://www.fiverr.com/agencies/skynetjoellc?utm_source=demo&utm_campaign=dental",
+    "contact_cta_url": "https://skynetjoe.com/contact?utm_source=demo&utm_campaign=dental",
+    "portfolio_url": "https://skynetjoe.com/portfolio"
+  }
+}
