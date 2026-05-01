@@ -145,48 +145,77 @@ export function Hero() {
       <div className="container relative z-10 grid gap-10 py-20 md:grid-cols-12 md:py-28">
         <motion.div
           className="md:col-span-8 lg:col-span-7"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         >
-          {/* H1 — display font with markdown-italic support */}
-          <h1
-            className="font-display text-4xl font-normal leading-tight tracking-tight md:text-5xl lg:text-6xl"
-            style={{ fontFamily: "var(--font-display, var(--font-heading))", color: "var(--ink, inherit)" }}
-          >
-            {renderItalic(h1Text)}
-          </h1>
-
-          {/* Sub */}
-          <p
-            className="mt-5 max-w-xl text-base md:text-lg"
-            style={{ fontFamily: "var(--font-body-v2, var(--font-body))", color: "var(--ink, inherit)", opacity: 0.72 }}
-          >
-            {subText}
-          </p>
-
-          {/* CTAs — v2 spec: primary = underline-link, secondary = tel pill */}
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <a
-              href={hero?.cta_primary?.href ?? "#contact"}
-              className="underline-link text-base font-medium underline underline-offset-4 decoration-1 hover:opacity-80 transition-opacity"
-              style={{ color: "var(--accent2, var(--ink))", fontFamily: "var(--font-display, inherit)", fontStyle: "italic" }}
+          {/* Translucent surface card — floats hero copy off the R3F tooth.
+              Per dental brief: "add a translucent surface card behind copy so it floats off the 3D." */}
+          <div className="dental-hero-card p-7 md:p-9">
+            {/* Eyebrow — calm clinic credential, not headline-shouty */}
+            <p
+              className="mb-4 text-[11px] font-medium uppercase tracking-[0.18em]"
+              style={{
+                color: "#2BAE9D",
+                fontFamily: "var(--font-mono, ui-monospace)",
+              }}
             >
-              {primaryCtaLabel}
-            </a>
-            {owner.contact_phone && (
+              Fifth Avenue · By Appointment
+            </p>
+
+            {/* H1 — Quicksand display, mint-on-bone — kid-and-parent safe per brief */}
+            <h1
+              className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl lg:text-[3.5rem]"
+              style={{
+                fontFamily: "var(--font-display, var(--font-heading))",
+                color: "var(--ink, #0F2A2E)",
+                fontWeight: 600,
+              }}
+            >
+              {renderItalic(h1Text)}
+            </h1>
+
+            {/* Sub — Inter, soft sage-grey, generous max-width */}
+            <p
+              className="mt-5 max-w-xl text-[15px] leading-relaxed md:text-base"
+              style={{
+                fontFamily: "var(--font-body-v2, var(--font-body))",
+                color: "#5C7177",
+              }}
+            >
+              {subText}
+            </p>
+
+            {/* CTAs — primary = warm coral pill (used sparingly per brief).
+                Secondary = mint-outline call button. NO hard sell tone. */}
+            <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
               <a
-                href={tel}
-                className="rounded-full border px-5 py-2.5 text-sm font-medium transition-all hover:opacity-80"
+                href={hero?.cta_primary?.href ?? "#contact"}
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all hover:translate-y-[-1px] hover:shadow-md"
                 style={{
-                  borderColor: "var(--ink, #111)",
-                  color: "var(--ink, #111)",
-                  background: "transparent",
+                  background: "#FF8A6B",
+                  color: "#FFFFFF",
+                  fontFamily: "var(--font-body-v2, var(--font-body))",
                 }}
               >
-                {stickyText ?? (hero?.cta_secondary?.label ?? `Call ${owner.contact_phone}`)}
+                {primaryCtaLabel}
+                <span aria-hidden>→</span>
               </a>
-            )}
+              {owner.contact_phone && (
+                <a
+                  href={tel}
+                  className="rounded-full border px-5 py-3 text-sm font-medium transition-colors hover:bg-white/60"
+                  style={{
+                    borderColor: "#2BAE9D",
+                    color: "#0F2A2E",
+                    background: "transparent",
+                    fontFamily: "var(--font-body-v2, var(--font-body))",
+                  }}
+                >
+                  {stickyText ?? (hero?.cta_secondary?.label ?? `Call ${owner.contact_phone}`)}
+                </a>
+              )}
+            </div>
           </div>
         </motion.div>
       </div>

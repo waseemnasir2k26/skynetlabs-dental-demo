@@ -50,20 +50,56 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background font-body text-foreground antialiased;
-    text-rendering: optimizeLegibility;
+    background: var(--bg, #F6FBFA);
+    color: var(--ink, #0F2A2E);
+    font-family: var(--font-body-v2, var(--font-body));
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    font-family: var(--font-display, var(--font-heading));
+    letter-spacing: -0.01em;
+    color: var(--ink, #0F2A2E);
   }
   ::selection {
-    @apply bg-primary text-primary-foreground;
+    background: var(--accent2, #2BAE9D);
+    color: #FFFFFF;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* dental — subtle-fade reveal (300ms ease-out, intersection-observer driven) */
+  .dental-reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dental-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* dental — translucent surface card behind hero copy (floats off the R3F scene) */
+  .dental-hero-card {
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(43, 174, 157, 0.18);
+    box-shadow: 0 1px 0 rgba(15, 42, 46, 0.04), 0 16px 40px -24px rgba(15, 42, 46, 0.18);
+    border-radius: 1.25rem;
+  }
+  /* dental — soft mint card surface */
+  .dental-subtle {
+    background: #E4F1EE;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dental-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 }
