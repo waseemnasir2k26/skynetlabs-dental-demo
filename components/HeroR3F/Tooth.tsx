@@ -1,41 +1,56 @@
 "use client";
 import * as React from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, MeshDistortMaterial } from "@react-three/drei";
+import { Environment, MeshTransmissionMaterial, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
+import { useCameraDrift, useMouseParallax } from "@/lib/r3f-helpers";
 
 /**
- * Dental flagship R3F scene — tooth in BSDF porcelain.
- * Geometry + material PRESERVED from the original scene.
- * Wrapper container, background, and lighting tinted to the mint+coral palette
- * per dental brief (warm clinic, NOT cold sterile, NOT dark).
+ * Phase 5 — Dental flagship R3F scene.
+ *  - floating molar/incisor with subsurface BSDF (MeshTransmissionMaterial)
+ *  - soft caustic dust via Sparkles (≤8k tris budget)
+ *  - 60s linear camera drift + mouse parallax ±5° (helpers handle reduced-motion)
+ *  - warm cream stage (no dark frame) so the antique-gold accent + Cormorant
+ *    headline can co-exist per brief
  */
+
+function Stage() {
+  // Camera drift (60s) + mouse parallax — both no-op on reduced-motion.
+  useCameraDrift({ amplitude: 0.18, periodSeconds: 60 });
+  useMouseParallax({ strength: 0.07, smoothing: 0.06 });
+  return null;
+}
+
 function ToothGeometry() {
   const meshRef = React.useRef<THREE.Mesh>(null!);
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
-      // 0.15 rpm → slow, calm rotation (preserved from original scene)
-      meshRef.current.rotation.y = clock.getElapsedTime() * 0.01571 * 60 * (0.15 / 60) * Math.PI * 2;
+      // 0.15rpm ≈ 0.0157 rad/s
+      meshRef.current.rotation.y = clock.getElapsedTime() * 0.0157;
+      // gentle floaty bob
+      meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.45) * 0.06;
     }
   });
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]} castShadow>
-      {/* Upper-incisor approximation — geometry preserved */}
-      <cylinderGeometry args={[0.55, 0.65, 1.8, 6, 4]} />
-      <MeshDistortMaterial
-        color="#FFE9E0"
+      {/* Upper-incisor approximation — squarish cylinder, taller than wide.
+          radialSegments=24 + heightSegments=6 keeps tris well under 8k. */}
+      <cylinderGeometry args={[0.55, 0.7, 1.85, 24, 6]} />
+      <MeshTransmissionMaterial
+        color="#FFF4EA"
         roughness={0.08}
-        metalness={0}
-        transmission={0.4}
-        thickness={1.2}
+        thickness={1.4}
         ior={1.62}
+        chromaticAberration={0.04}
+        anisotropy={0.18}
+        distortion={0.12}
+        distortionScale={0.4}
+        temporalDistortion={0.08}
         attenuationColor="#FFE9E0"
-        attenuationDistance={0.6}
-        distort={0.05}
-        speed={0.4}
-        envMapIntensity={1.2}
+        attenuationDistance={0.7}
+        backside={false}
       />
     </mesh>
   );
@@ -48,52 +63,46 @@ interface ToothMeshProps {
 export default function ToothMesh({ posterSrc: _posterSrc = "/hero/poster.jpg" }: ToothMeshProps) {
   return (
     <div className="absolute inset-0 -z-10">
-      {/* Mint-bone wash background — no longer the dark #1F1A14.
-          Soft radial vignette so the porcelain tooth reads as the focal point
-          and the mint floor recedes warmly behind it. */}
+      {/* Cream stage + soft radial glow centered on mesh, per brief. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 55%, #FFFFFF 0%, #F6FBFA 45%, #E4F1EE 100%)",
-        }}
-      />
-      {/* Subtle coral wash, top-right — accent without becoming a candy site */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 88% 12%, rgba(255,138,107,0.10) 0%, rgba(255,138,107,0) 38%)",
+            "radial-gradient(ellipse 60% 50% at 65% 50%, rgba(201,169,97,0.16) 0%, rgba(232,228,221,0.0) 55%), #F5F1EA",
         }}
       />
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, 0, 4], fov: 35 }}
+        camera={{ position: [0, 0, 4.2], fov: 32 }}
         gl={{ antialias: true, alpha: true }}
         style={{ position: "absolute", inset: 0 }}
       >
-        {/* Bright clinical-warm ambient — bone, not sterile blue */}
-        <ambientLight intensity={0.55} color="#FFF8F2" />
-        {/* Key light — soft daylight 4200K */}
-        <pointLight position={[-2, 1.5, 3]} intensity={2.6} color="#FFEDD8" />
-        {/* Mint rim — picks up the practice palette without staining the porcelain */}
-        <pointLight position={[2.4, 1.0, 2.2]} intensity={0.8} color="#2BAE9D" />
-        {/* Warm coral fill — operatory wood-tone bounce, very subtle */}
-        <pointLight position={[0, -2, 2]} intensity={0.9} color="#FF8A6B" />
-        <Environment preset="studio" />
+        {/* Stage handles drift + parallax via helpers (reduced-motion gated) */}
+        <Stage />
+
+        <ambientLight intensity={0.35} />
+        {/* Key light — warm 4200K, camera-left */}
+        <pointLight position={[-2.4, 1.6, 3]} intensity={2.6} color="#FFD580" />
+        {/* Rim light — cool, behind */}
+        <pointLight position={[2.2, 1.0, -2.5]} intensity={1.4} color="#DCE6F2" />
+        {/* Loupe fill from below */}
+        <pointLight position={[0, -2, 2]} intensity={0.9} color="#FFF5E0" />
+
+        <Environment preset="studio" environmentIntensity={0.4} />
+
         <React.Suspense fallback={null}>
           <ToothGeometry />
+          {/* Soft caustic dust — kept tiny so it doesn't compete w/ headline */}
+          <Sparkles
+            count={28}
+            scale={[3.5, 2.5, 1.8]}
+            size={1.6}
+            speed={0.2}
+            opacity={0.55}
+            color="#C9A961"
+          />
         </React.Suspense>
       </Canvas>
-      {/* Soft floor shadow — gives the tooth weight without a hard line */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(15,42,46,0) 0%, rgba(15,42,46,0.04) 100%)",
-        }}
-        aria-hidden
-      />
     </div>
   );
 }

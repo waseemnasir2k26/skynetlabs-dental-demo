@@ -35,7 +35,6 @@ export function Hero() {
   const h1Text = copy?.h1 ?? hero?.h1 ?? hero?.headline ?? siteConfig.brand.tagline;
   const subText = copy?.sub ?? hero?.sub ?? siteConfig.brand.tagline;
   const primaryCtaLabel = copy?.primary_cta ?? hero?.cta_primary?.label ?? "Get a free quote →";
-  const stickyText = copy?.sticky_mobile_bar;
 
   // v2: hero.kind determines scene; v1: hero_3d.r3f_scene
   const heroKind = hero?.kind; // "r3f" | "photo" | "cinemagraph" | undefined
@@ -145,79 +144,60 @@ export function Hero() {
       <div className="container relative z-10 grid gap-10 py-20 md:grid-cols-12 md:py-28">
         <motion.div
           className="md:col-span-8 lg:col-span-7"
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          {/* Translucent surface card — floats hero copy off the R3F tooth.
-              Per dental brief: "add a translucent surface card behind copy so it floats off the 3D." */}
-          <div className="dental-hero-card p-7 md:p-9">
-            {/* Eyebrow — calm clinic credential, not headline-shouty */}
-            <p
-              className="mb-4 text-[11px] font-medium uppercase tracking-[0.18em]"
-              style={{
-                color: "#2BAE9D",
-                fontFamily: "var(--font-mono, ui-monospace)",
-              }}
-            >
-              Fifth Avenue · By Appointment
-            </p>
+          {/* H1 — display font with markdown-italic support */}
+          <h1
+            className="font-display text-4xl font-normal leading-tight tracking-tight md:text-5xl lg:text-6xl"
+            style={{ fontFamily: "var(--font-display, var(--font-heading))", color: "var(--ink, inherit)" }}
+          >
+            {renderItalic(h1Text)}
+          </h1>
 
-            {/* H1 — Quicksand display, mint-on-bone — kid-and-parent safe per brief */}
-            <h1
-              className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl lg:text-[3.5rem]"
-              style={{
-                fontFamily: "var(--font-display, var(--font-heading))",
-                color: "var(--ink, #0F2A2E)",
-                fontWeight: 600,
-              }}
-            >
-              {renderItalic(h1Text)}
-            </h1>
+          {/* Sub */}
+          <p
+            className="mt-5 max-w-xl text-base md:text-lg"
+            style={{ fontFamily: "var(--font-body-v2, var(--font-body))", color: "var(--ink, inherit)", opacity: 0.72 }}
+          >
+            {subText}
+          </p>
 
-            {/* Sub — Inter, soft sage-grey, generous max-width */}
-            <p
-              className="mt-5 max-w-xl text-[15px] leading-relaxed md:text-base"
+          {/* CTAs — primary bronze pill + secondary navy ghost (config-driven) */}
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <a
+              href={(copy as { primary_cta_href?: string })?.primary_cta_href ?? hero?.cta_primary?.href ?? "#contact"}
+              className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide shadow-medium transition-all duration-200 hover:shadow-hard hover:-translate-y-0.5"
               style={{
+                background: "var(--accent2, var(--accent, #B8893E))",
+                color: "var(--bg, #fff)",
                 fontFamily: "var(--font-body-v2, var(--font-body))",
-                color: "#5C7177",
               }}
             >
-              {subText}
-            </p>
-
-            {/* CTAs — primary = warm coral pill (used sparingly per brief).
-                Secondary = mint-outline call button. NO hard sell tone. */}
-            <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+              {primaryCtaLabel}
+            </a>
+            {(copy?.secondary_cta || hero?.cta_secondary?.label) && (
               <a
-                href={hero?.cta_primary?.href ?? "#contact"}
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all hover:translate-y-[-1px] hover:shadow-md"
+                href={(copy as { secondary_cta_href?: string })?.secondary_cta_href ?? hero?.cta_secondary?.href ?? (owner.contact_phone ? tel : "#contact")}
+                className="inline-flex items-center gap-1.5 rounded-full border px-5 py-3 text-sm font-medium transition-colors hover:opacity-80"
                 style={{
-                  background: "#FF8A6B",
-                  color: "#FFFFFF",
+                  borderColor: "var(--detail, var(--ink, #111))",
+                  color: "var(--detail, var(--ink, #111))",
+                  background: "transparent",
                   fontFamily: "var(--font-body-v2, var(--font-body))",
                 }}
               >
-                {primaryCtaLabel}
-                <span aria-hidden>→</span>
+                {copy?.secondary_cta ?? hero?.cta_secondary?.label}
               </a>
-              {owner.contact_phone && (
-                <a
-                  href={tel}
-                  className="rounded-full border px-5 py-3 text-sm font-medium transition-colors hover:bg-white/60"
-                  style={{
-                    borderColor: "#2BAE9D",
-                    color: "#0F2A2E",
-                    background: "transparent",
-                    fontFamily: "var(--font-body-v2, var(--font-body))",
-                  }}
-                >
-                  {stickyText ?? (hero?.cta_secondary?.label ?? `Call ${owner.contact_phone}`)}
-                </a>
-              )}
-            </div>
+            )}
           </div>
         </motion.div>
+
+        {/* Inline filter row — Elliman pattern, only when niche === realestate */}
+        {siteConfig.niche === "realestate" && (
+          <FilterRow ctaLabel={primaryCtaLabel} ctaHref={(copy as { primary_cta_href?: string })?.primary_cta_href ?? "#listings"} />
+        )}
       </div>
     </section>
   );
@@ -235,6 +215,86 @@ function StaticPoster({ src }: { src: string }) {
       fetchPriority="high"
       className="absolute inset-0 -z-10 object-cover"
     />
+  );
+}
+
+// ── Real-estate filter row (Elliman pattern) ─────────────────────────────────
+function FilterRow({ ctaLabel, ctaHref }: { ctaLabel: string; ctaHref: string }) {
+  const fields = [
+    { label: "Price", options: ["Any", "$1M+", "$5M+", "$10M+", "$20M+", "$50M+"] },
+    { label: "Beds", options: ["Any", "2+", "3+", "4+", "5+", "6+"] },
+    { label: "Baths", options: ["Any", "2+", "3+", "4+", "5+"] },
+    { label: "Type", options: ["Any", "Condo", "Penthouse", "Estate", "Waterfront", "New Dev"] },
+  ];
+
+  return (
+    <motion.form
+      onSubmit={(e) => e.preventDefault()}
+      className="md:col-span-12"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+      }}
+    >
+      <div
+        className="grid grid-cols-1 items-stretch gap-2 rounded-[18px] border p-2 md:grid-cols-[1fr_1fr_1fr_1fr_auto] md:gap-0 md:p-1.5"
+        style={{
+          background: "rgba(26, 26, 26, 0.65)",
+          borderColor: "rgba(77, 208, 225, 0.22)",
+          boxShadow: "0 30px 80px -20px rgba(77, 208, 225, 0.18), 0 8px 24px -4px rgba(0,0,0,0.45)",
+        }}
+      >
+        {fields.map((f, i) => (
+          <label
+            key={f.label}
+            className="relative flex flex-col gap-0.5 px-4 py-2.5 md:py-3"
+            style={{
+              borderRight: i < fields.length - 1 ? "1px solid rgba(77, 208, 225, 0.14)" : "none",
+            }}
+          >
+            <span
+              className="text-[10px] font-medium uppercase tracking-[0.18em]"
+              style={{
+                color: "rgba(255,255,255,0.55)",
+                fontFamily: "var(--font-mono, ui-monospace)",
+              }}
+            >
+              {f.label}
+            </span>
+            <select
+              defaultValue={f.options[0]}
+              className="w-full bg-transparent text-sm font-medium outline-none"
+              style={{
+                color: "#FFFFFF",
+                fontFamily: "var(--font-body-v2, var(--font-body))",
+              }}
+            >
+              {f.options.map((opt) => (
+                <option key={opt} value={opt} style={{ background: "#0A0A0A", color: "#FFFFFF" }}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+        <a
+          href={ctaHref}
+          className="flex items-center justify-center gap-1.5 rounded-[14px] px-6 py-3 text-sm font-semibold tracking-wide transition-all duration-200 hover:opacity-90 md:rounded-[12px] md:px-7"
+          style={{
+            background: "transparent",
+            color: "#4DD0E1",
+            border: "1px solid rgba(77, 208, 225, 0.7)",
+            fontFamily: "var(--font-body-v2, var(--font-body))",
+            boxShadow: "0 0 18px -4px rgba(77, 208, 225, 0.45) inset, 0 0 18px -4px rgba(77, 208, 225, 0.35)",
+          }}
+        >
+          {ctaLabel}
+        </a>
+      </div>
+    </motion.form>
   );
 }
 

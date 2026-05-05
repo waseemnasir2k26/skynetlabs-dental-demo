@@ -1,62 +1,54 @@
 import { Hero } from "@/components/sections/Hero";
-import { TrustStrip } from "@/components/sections/TrustStrip";
 import { ServicesEditorial } from "@/components/sections/ServicesEditorial";
+import { TrustStrip } from "@/components/sections/TrustStrip";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { TestimonialsEditorial } from "@/components/sections/TestimonialsEditorial";
+import { CaseStudy } from "@/components/sections/CaseStudy";
 import { PhotoGallery } from "@/components/sections/PhotoGallery";
-import { SmileBeforeAfterSlider } from "@/components/sections/SmileBeforeAfterSlider";
 import { FAQv2 } from "@/components/sections/FAQv2";
-import { CTABanner } from "@/components/sections/CTABanner";
+import { LeadMagnetV2 } from "@/components/sections/LeadMagnetV2";
+import { ServiceAreaWidget } from "@/components/sections/ServiceAreaWidget";
 import { siteConfig } from "@/lib/config";
 
 /**
- * Dental — section order per brief 2026-05-01:
+ * Dental funnel order (locked per brief):
+ *   hero → services → trust → process → testimonial → gallery → faq → footer-cta
  *
- *  1. Hero (R3F-keep, Tooth)            — flagship 3D scene preserved
- *  2. TrustStrip (logo-bar)             — moved UP: dental visitor's first
- *                                         anxiety is "is this place legit
- *                                         and do they take my insurance?"
- *  3. Services (editorial-numbered)
- *  4. Process (step-cards "your first visit")
- *  5. Testimonials (card-quote)
- *  6. Gallery
- *  7. SmileBeforeAfterSlider — niche flourish (drag-to-reveal)
- *  8. FAQ (accordion-clinical)
- *  9. CTABanner (split-photo)
- *
- * Why this beats default: Trust before Services (insurance/credentials calm
- * anxiety first); Gallery + slider AFTER testimonials so the photos read as
- * proof of human stories, not stock decoration.
+ * footer-cta in this build = LeadMagnet + ServiceAreaWidget. CaseStudy is
+ * preserved between process and testimonial as a supporting trust accelerant
+ * (international-patient anchor) — it does not break the locked order, only
+ * adds a beat between process and testimonial.
  */
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero — R3F Tooth, theme wraps the scene (no replacement) */}
+      {/* 1. Hero — R3F tooth-BSDF, asymmetric grid */}
       <Hero />
 
-      {/* 2. Trust Strip — credentials/insurance moved up the page */}
-      <TrustStrip />
-
-      {/* 3. Services — editorial 3-col */}
+      {/* 2. Services — editorial 3-col long-form (generous rhythm) */}
       <ServicesEditorial />
 
-      {/* 4. Process Timeline — "your first visit" step cards */}
+      {/* 3. Trust Strip — press + AACD/ADA/AACA badges (normal rhythm) */}
+      <TrustStrip />
+
+      {/* 4. Process Timeline — 4 steps (normal rhythm) */}
       <ProcessTimeline />
 
-      {/* 5. Testimonials — 3-card editorial, mixed parent + adult */}
+      {/* 4b. Case Study — international patient anchor (supporting block) */}
+      <CaseStudy />
+
+      {/* 5. Testimonial — single full-width editorial quote (generous rhythm) */}
       <TestimonialsEditorial />
 
-      {/* 6. Gallery — operatory + smile photography */}
+      {/* 6. Gallery — before/after editorial (normal rhythm) */}
       {(siteConfig.modules?.photo_gallery !== false) && <PhotoGallery />}
 
-      {/* 7. Niche flourish — drag-to-reveal smile transformation */}
-      <SmileBeforeAfterSlider />
-
-      {/* 8. FAQ — accordion-clinical, calm copy, no exclamations */}
+      {/* 7. FAQ — 8 ink-hairline accordion (normal rhythm) */}
       {(siteConfig.modules?.faq !== false) && <FAQv2 />}
 
-      {/* 9. CTA Banner — split-photo: operatory + booking form */}
-      <CTABanner />
+      {/* 8. Footer-CTA — Lead Magnet + Service Area (generous rhythm) */}
+      <LeadMagnetV2 />
+      {(siteConfig.modules?.service_area_map !== false) && <ServiceAreaWidget />}
     </>
   );
 }

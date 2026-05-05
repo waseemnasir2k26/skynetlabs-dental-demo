@@ -5,6 +5,5 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "regions": [
     "iad1"
-  ],
-  "name": "skynetlabs-dental-demo"
+  ]
 }

@@ -16,7 +16,10 @@ import {
   IBM_Plex_Sans,
   IBM_Plex_Mono,
   JetBrains_Mono,
+  Sora,
 } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -84,6 +87,12 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sora",
+  display: "swap",
+});
 
 // ── Font registry ─────────────────────────────────────────────────────────────
 const FONT_REGISTRY: Record<string, { variable: string; cssVar: string }> = {
@@ -110,13 +119,17 @@ const FONT_REGISTRY: Record<string, { variable: string; cssVar: string }> = {
   "GT America Mono": { variable: jetbrainsMono.variable, cssVar: "--font-jetbrains-mono" },
   Söhne: { variable: inter.variable, cssVar: "--font-inter" },
   "Söhne Breit": { variable: spaceGrotesk.variable, cssVar: "--font-space-grotesk" },
-  Geist: { variable: inter.variable, cssVar: "--font-inter" },
+  // Geist via the standalone `geist` package (not next/font/google in Next 14)
+  Geist: { variable: GeistSans.variable, cssVar: "--font-geist-sans" },
+  "Geist Sans": { variable: GeistSans.variable, cssVar: "--font-geist-sans" },
+  "Geist Mono": { variable: GeistMono.variable, cssVar: "--font-geist-mono" },
   "IBM Plex Sans": { variable: ibmPlexSans.variable, cssVar: "--font-ibm-plex-sans" },
   "IBM Plex Mono": { variable: ibmPlexMono.variable, cssVar: "--font-ibm-plex-mono" },
   "JetBrains Mono": { variable: jetbrainsMono.variable, cssVar: "--font-jetbrains-mono" },
   "Inter Tight": { variable: inter.variable, cssVar: "--font-inter" },
   Tiempos: { variable: sourceSerif4.variable, cssVar: "--font-source-serif-4" },
   "Tiempos Text": { variable: sourceSerif4.variable, cssVar: "--font-source-serif-4" },
+  Sora: { variable: sora.variable, cssVar: "--font-sora" },
 };
 
 const ALL_FONT_VARS = [
@@ -135,6 +148,9 @@ const ALL_FONT_VARS = [
   ibmPlexSans.variable,
   ibmPlexMono.variable,
   jetbrainsMono.variable,
+  sora.variable,
+  GeistSans.variable,
+  GeistMono.variable,
 ].join(" ");
 
 export const metadata: Metadata = buildMetadata({});
@@ -165,8 +181,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     ? (FONT_REGISTRY[v2Fonts.mono] ?? FONT_REGISTRY["JetBrains Mono"])
     : FONT_REGISTRY["JetBrains Mono"];
 
-  // v1 theme mode (optional in v2)
-  const themeMode = siteConfig.theme?.mode === "auto" ? "system" : (siteConfig.theme?.mode ?? "light");
+  // v1 theme mode (optional in v2). v2 configs use dark_mode boolean.
+  const v2Dark = (siteConfig as { dark_mode?: boolean }).dark_mode === true;
+  const themeMode = siteConfig.theme?.mode === "auto"
+    ? "system"
+    : (siteConfig.theme?.mode ?? (v2Dark ? "dark" : "light"));
   const enableSystem = siteConfig.theme?.mode === "auto";
 
   // v2 palette — use config.palette if present, else fallback to legacy theme colors
@@ -175,19 +194,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const legacySurface = "#F9FAFB";
   const legacyInk = "#111827";
 
+  // Detail luminance — when dark (e.g. law's navy #0A2540), promote it to nav-bg
+  // and switch nav text to bg/parchment for the editorial-luxury "anchored
+  // authority" pattern. Light detail (most niches) keeps nav transparent.
+  function _luma(hex: string): number {
+    const s = hex.replace(/^#/, "");
+    const r = parseInt(s.slice(0, 2), 16) / 255;
+    const g = parseInt(s.slice(2, 4), 16) / 255;
+    const b = parseInt(s.slice(4, 6), 16) / 255;
+    return 0.299 * r + 0.587 * g + 0.114 * b;
+  }
+  const detailIsDark = p ? _luma(p.detail) < 0.35 : false;
+  const navBg = detailIsDark && p ? p.detail : "transparent";
+  const navFg = detailIsDark && p ? p.bg : "var(--ink)";
+
   const paletteVars = p
     ? `
   --bg: ${p.bg};
   --surface: ${p.surface};
   --ink: ${p.ink};
   --accent2: ${p.accent};
-  --detail: ${p.detail};`
+  --detail: ${p.detail};
+  --nav-bg: ${navBg};
+  --nav-fg: ${navFg};`
     : `
   --bg: ${legacyBg};
   --surface: ${legacySurface};
   --ink: ${legacyInk};
   --accent2: ${siteConfig.theme?.accent ?? "#C8A35B"};
-  --detail: ${siteConfig.theme?.secondary ?? "#EDE3D2"};`;
+  --detail: ${siteConfig.theme?.secondary ?? "#EDE3D2"};
+  --nav-bg: transparent;
+  --nav-fg: var(--ink);`;
 
   // Legacy HSL-based CSS vars (only when theme is present)
   const legacyThemeVars = siteConfig.theme
@@ -212,8 +249,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     }
   `;
 
+  // Force body bg/ink to v2 palette when dark_mode is true so dark surfaces render
+  // even before any client-side theme provider has hydrated.
+  const bodyStyle = v2Dark && p
+    ? { background: p.bg, color: p.ink }
+    : undefined;
+
   return (
-    <html lang={siteConfig.location.country === "UK" ? "en-GB" : "en-US"} suppressHydrationWarning>
+    <html
+      lang={siteConfig.location.country === "UK" ? "en-GB" : "en-US"}
+      className={v2Dark ? "dark" : undefined}
+      suppressHydrationWarning
+    >
       <head>
         <style dangerouslySetInnerHTML={{ __html: themeStyle }} />
         <link rel="preconnect" href="https://api.web3forms.com" />
@@ -222,7 +269,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildLocalBusinessJsonLd()) }}
         />
       </head>
-      <body className={ALL_FONT_VARS}>
+      <body className={ALL_FONT_VARS} style={bodyStyle}>
         <ThemeProvider defaultTheme={themeMode as "light" | "dark" | "system"} enableSystem={enableSystem}>
           <SiteHeader />
           <main>{children}</main>

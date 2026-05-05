@@ -10,8 +10,16 @@ export function ServicesEditorial() {
     ? siteConfig.services_v2.map((s) => ({ title: s.title, blurb: s.blurb, slug: s.slug ?? "" }))
     : siteConfig.services.map((s) => ({ title: s.name, blurb: s.description, slug: s.slug }));
 
+  // Phase 4 design.rhythm — generous|normal|tight per niche brief
+  const rhythm = (siteConfig as { design?: { rhythm?: { services?: string } } })
+    ?.design?.rhythm?.services ?? "normal";
+  const py =
+    rhythm === "generous" ? "py-24 md:py-36" :
+    rhythm === "tight"    ? "py-12 md:py-16"  :
+                            "py-20 md:py-24";
+
   return (
-    <section id="services" className="py-24 md:py-32" style={{ background: "var(--bg, #fff)" }}>
+    <section id="services" className={py} style={{ background: "var(--bg, #fff)" }}>
       <div className="container">
         {/* Section header */}
         <div className="mb-16 max-w-xl">

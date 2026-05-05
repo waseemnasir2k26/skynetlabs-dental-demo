@@ -1,7 +1,7 @@
 {
   "brand": {
-    "name": "Fifth Avenue Dental",
-    "tagline": "A calm, modern Manhattan practice — by appointment on Fifth Avenue."
+    "name": "SkynetLabs Dental Demo",
+    "tagline": "Manhattan cosmetic dentistry, sculpted in porcelain"
   },
   "niche": "dental",
   "niche_label": "Dental",
@@ -19,25 +19,32 @@
     "contact_phone": "+1-212-555-0102"
   },
   "palette": {
-    "bg": "#F6FBFA",
+    "bg": "#F5F1EA",
     "surface": "#FFFFFF",
-    "ink": "#0F2A2E",
-    "accent": "#2BAE9D",
-    "detail": "#FF8A6B"
+    "ink": "#0A0A0A",
+    "accent": "#C9A961",
+    "detail": "#E8E4DD"
   },
   "fonts": {
-    "display": "Quicksand",
+    "display": "Cormorant Garamond",
     "body": "Inter",
-    "mono": "JetBrains Mono"
+    "mono": null
   },
   "dark_mode": false,
+  "design": {
+    "rhythm": {
+      "services": "generous",
+      "testimonial": "generous",
+      "gallery": "normal"
+    }
+  },
   "hero": {
     "kind": "r3f",
-    "h1": "Calm, *modern* dentistry on Fifth Avenue.",
-    "sub": "A quiet Manhattan practice for cosmetic, restorative, and family care. We take time, explain clearly, and never rush a treatment plan.",
+    "h1": "Crafting masculine smiles in Manhattan.",
+    "sub": "By-application concierge dentistry on Fifth Avenue. Founder-led. Membership-only roster of fewer than 200 patients.",
     "photo_url": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1920&auto=format&fit=crop&q=80",
     "photo_credit": "Photo by Caroline LM on Unsplash",
-    "overlay": "rgba(246,251,250,0.0)",
+    "overlay": "rgba(245,241,234,0.0)",
     "focal_point": "center"
   },
   "hero_3d": {
@@ -59,18 +66,20 @@
     "reduce_motion_fallback": "static-poster"
   },
   "copy": {
-    "primary_cta": "Book a consultation",
+    "h1": "Crafting masculine smiles in Manhattan.",
+    "sub": "By-application concierge dentistry on Fifth Avenue. Founder-led. Membership-only roster of fewer than 200 patients.",
+    "primary_cta": "See if you qualify",
     "primary_cta_href": "#contact",
-    "secondary_cta": "Talk to the front desk",
+    "secondary_cta": "Call the studio",
     "secondary_cta_href": "tel:+12125550102",
-    "sticky_mobile_bar": "Book a consultation — (212) 555-0102"
+    "sticky_mobile_bar": "Call the studio — (212) 555-0102"
   },
   "trust_strip": [
-    "AACD Accredited",
-    "Bupa & Denplan Accepted",
-    "GDC Registered Clinicians",
-    "Invisalign Diamond+ Provider",
-    "20+ Years on Fifth Avenue"
+    "AACD Accredited Member",
+    "5,000+ Smile Makeovers",
+    "20+ Years on Fifth Avenue",
+    "Featured · Vogue · GQ · NYT",
+    "CEREC Same-Day Lab On-Site"
   ],
   "service_area": {
     "primary_city": "Manhattan, NY",
@@ -276,14 +285,14 @@
     "calendly_url": "https://calendly.com/skynetlabs-demo/15min"
   },
   "seo": {
-    "title": "Fifth Avenue Dental — Calm, Modern Manhattan Dentistry | SkynetLabs Demo",
-    "description": "A quiet, modern Manhattan dental practice. Cosmetic, restorative and family care. AACD accredited, Invisalign Diamond+, Bupa & Denplan accepted. By appointment.",
+    "title": "Cosmetic Dentistry Manhattan | No-Prep Porcelain Veneers | SkynetLabs",
+    "description": "Manhattan cosmetic dentistry sculpted in porcelain. AACD Accredited, 5,000+ smile makeovers, CEREC same-day lab. By appointment, Fifth Avenue.",
     "keywords": [
-      "dentist manhattan",
-      "cosmetic dentist nyc",
-      "family dentist fifth avenue",
-      "invisalign manhattan",
-      "anxiety free dentist nyc"
+      "cosmetic dentist manhattan",
+      "porcelain veneers nyc",
+      "no-prep veneers",
+      "smile design manhattan",
+      "cerec dentist nyc"
     ],
     "noindex": true
   },

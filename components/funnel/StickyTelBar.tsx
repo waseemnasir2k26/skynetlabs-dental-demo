@@ -10,7 +10,12 @@ import { siteConfig } from "@/lib/config";
 export function StickyTelBar() {
   const [show, setShow] = React.useState(false);
 
+  // Editorial niches (e.g. law) opt out via modules.sticky_mobile_bar = false
+  const enabled = (siteConfig.modules as { sticky_mobile_bar?: boolean } | undefined)
+    ?.sticky_mobile_bar !== false;
+
   React.useEffect(() => {
+    if (!enabled) return;
     // Try IntersectionObserver on hero sentinel element first
     const sentinel = document.getElementById("hero-sentinel");
     if (sentinel && "IntersectionObserver" in window) {
@@ -26,7 +31,9 @@ export function StickyTelBar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   const tel = siteConfig.funnel?.sticky_tel || siteConfig.owner.contact_phone || "";
   const label = siteConfig.copy?.sticky_mobile_bar ?? `Call ${tel}`;

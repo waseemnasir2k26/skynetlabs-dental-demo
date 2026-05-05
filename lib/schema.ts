@@ -147,6 +147,24 @@ export const PhotosV2Schema = z.object({
   gallery: z.array(z.string()),
 }).optional();
 
+// ── Phase 4 design rhythm block (optional, additive) ─────────────────────────
+// Lets per-niche briefs set per-section spacing rhythm (tight / normal / generous).
+// Schema is backward-compatible — existing 20 configs without `design` validate.
+export const RhythmKeySchema = z.enum(["tight", "normal", "generous"]);
+export const DesignRhythmSchema = z.object({
+  services: RhythmKeySchema.default("normal"),
+  testimonial: RhythmKeySchema.default("normal"),
+  gallery: RhythmKeySchema.default("normal"),
+}).partial();
+
+export const DesignBlockSchema = z.object({
+  // palette + fonts already exist as top-level fields — re-declared here
+  // optionally so authors can also pass the whole block under `design.*`.
+  palette: PaletteV2Schema.optional(),
+  fonts: FontsV2Schema.optional(),
+  rhythm: DesignRhythmSchema.optional(),
+}).optional();
+
 // ── original schema + v2 optional fields ──────────────────────────────────────
 
 export const SiteConfigSchema = z.object({
@@ -248,8 +266,12 @@ export const SiteConfigSchema = z.object({
     h1: z.string().optional(),
     sub: z.string().optional(),
     primary_cta: z.string().optional(),
+    secondary_cta: z.string().optional(),
     sticky_mobile_bar: z.string().optional(),
   }).optional(),
+  // Phase 4 — optional design block (rhythm + optional re-declarations).
+  // Existing configs without this field still validate.
+  design: DesignBlockSchema,
 });
 
 export type SiteConfig = z.infer<typeof SiteConfigSchema>;

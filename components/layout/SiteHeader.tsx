@@ -19,9 +19,20 @@ export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+    <header
+      className="sticky top-0 z-40 w-full border-b backdrop-blur-md"
+      style={{
+        background: "var(--nav-bg, hsl(var(--background) / 0.80))",
+        color: "var(--nav-fg, hsl(var(--foreground)))",
+        borderColor: "var(--nav-bg, hsl(var(--border) / 0.40)) ",
+      }}
+    >
       <div className="container flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 font-heading text-lg font-bold">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-heading text-lg font-bold"
+          style={{ color: "var(--nav-fg, inherit)" }}
+        >
           <span
             className="inline-block h-2.5 w-2.5 rounded-full"
             style={{ background: siteConfig.theme?.primary ?? "var(--accent2, #7A2E2A)" }}
@@ -35,7 +46,8 @@ export function SiteHeader() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium transition-opacity hover:opacity-100"
+              style={{ color: "var(--nav-fg, hsl(var(--foreground)))", opacity: 0.85 }}
             >
               {l.label}
             </Link>
@@ -45,7 +57,8 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href={`tel:${siteConfig.owner.contact_phone}`}
-            className="flex items-center gap-1.5 text-sm font-medium text-foreground/80 hover:text-foreground"
+            className="flex items-center gap-1.5 text-sm font-medium hover:opacity-100"
+            style={{ color: "var(--nav-fg, hsl(var(--foreground)))", opacity: 0.85 }}
           >
             <Phone className="h-4 w-4" />
             {siteConfig.owner.contact_phone}
